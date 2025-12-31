@@ -11,7 +11,7 @@ The function is designed for easy integration into existing S3 event-driven pipe
 - **Trigger**: S3 "All object create events"
 
 ## Deployment Steps
-1. Create S3 bucket: `aws s3 mb s3://file-type-detector`
+1. Create S3 bucket: Using AWS Management Console, create a S3 bucket called `file-type-detector`
 2. Create Lambda function:
    - Option: Author from scratch
    - Name: `file-type-detector`
@@ -19,18 +19,26 @@ The function is designed for easy integration into existing S3 event-driven pipe
    - Execution Role: Create a new role from AWS policy templates
    - Role name: file-type-detector-s3-role
    - Policy template: `Amazon S3 object read-only permissions`
+   <img width="1651" height="604" alt="Screenshot 2025-12-31 094414" src="https://github.com/user-attachments/assets/ccfc32ca-335b-4e64-be8e-92d988f469e5" />
+   <img width="1617" height="574" alt="Screenshot 2025-12-31 094440" src="https://github.com/user-attachments/assets/8b86ccf3-8861-4ca6-819f-cb4001e82222" />
+
 4. Configure Lambda function:
    - Go to your function, scroll down to the **Code** tab and add below code to `lambda_function.py` and deploy
+   <img width="1654" height="682" alt="image" src="https://github.com/user-attachments/assets/4caaa7d9-31bd-4c91-91d9-2fa21b756bfd" />
+
    - Go to Function overview (Scroll to top) and add a trigger
      - Source: S3
      - Bucket: `file-type-detector`
      - Event types: All objects create events
      - Acknowledge the recursive invocation
+   <img width="1654" height="732" alt="Screenshot 2025-12-31 102524" src="https://github.com/user-attachments/assets/bc5a32ee-545f-4761-ac36-759a1f596a26" />
+
 5. Upload any file to the S3 bucket
 6. View the output
      - Go to your function and select Monitor tab
      - Click on the Cloudwatch Logs and select the latest log group
      - Locate the file type output
+   <img width="1627" height="429" alt="Screenshot 2025-12-31 103144" src="https://github.com/user-attachments/assets/6ec0c046-eb5b-46b7-bd78-8597a605c1e3" />
 
 ## Code (lambda_function.py)
 ```python
